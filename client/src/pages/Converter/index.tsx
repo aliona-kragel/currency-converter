@@ -7,7 +7,7 @@ const Converter = () => {
   const { currenciesList } = useTypedSelector(state => state.converter);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api")
+    fetch("http://localhost:3001/ShortedCurrenciesInfo")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -20,7 +20,7 @@ const Converter = () => {
 
   return (
     <>
-      {currenciesList?.length && currenciesList.map((curr) => <p key={curr.id}>{curr.curr_name}</p>)}
+      {currenciesList?.length && currenciesList.map((curr) => <p key={curr.id}>{`${curr.name} `}</p>)}
     </>
   )
 }
