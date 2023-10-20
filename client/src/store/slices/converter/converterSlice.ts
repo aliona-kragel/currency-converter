@@ -1,15 +1,14 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { IConverter } from "./converterTypes";
-import { ICurrenciesList } from "../../../types/types";
 
 const initialState: IConverter = {
-  currenciesList: [],
+  currenciesList: null,
 }
 const converterSlice = createSlice({
   name: "converter",
   initialState,
   reducers: {
-    setCurrenсiesList: (state, action: PayloadAction<ICurrenciesList[]>) => {
+    setCurrenсiesList: (state, action) => {
       state.currenciesList = action.payload;
     }
   }
