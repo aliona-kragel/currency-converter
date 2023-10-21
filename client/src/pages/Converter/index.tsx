@@ -1,17 +1,18 @@
 import { useEffect } from "react";
 import useConverterActions from "../../hooks/useConverterActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import axios from "axios";
+import currencyService from "../../services";
 
 const Converter = () => {
-  const { setCurrenсiesList } = useConverterActions();
-  const { currenciesList } = useTypedSelector(state => state.converter);
+  const { setShortedCurrenсies } = useConverterActions();
+  const { shortedCurrencies } = useTypedSelector(state => state.converter);
 
   useEffect(() => {
-    fetch("http://localhost:3001/ShortedCurrenciesInfo")
-      .then((res) => res.json())
+    currencyService.getShortedCurrencies()
       .then((data) => {
         console.log(data);
-        setCurrenсiesList(data)
+        setShortedCurrenсies(data)
       })
       .catch((error) => {
         console.error("Произошла ошибка при выполнении запроса:", error);
@@ -20,7 +21,7 @@ const Converter = () => {
 
   return (
     <>
-      {currenciesList?.length && currenciesList.map((curr) => <p key={curr.id}>{`${curr.name} `}</p>)}
+      {shortedCurrencies?.length && shortedCurrencies.map((curr) => <p key={curr.id}>{`${curr.name} `}</p>)}
     </>
   )
 }

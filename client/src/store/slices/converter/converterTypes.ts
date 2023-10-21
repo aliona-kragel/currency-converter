@@ -1,6 +1,7 @@
-import { ICurrenciesList } from "../../../types/types";
+import { ICurrencies, IShortedCurrencies } from "../../../types/types";
 
 export interface IConverter {
-  currenciesList: ICurrenciesList[] | null;
+  currenciesList: ICurrencies[] | null;
+  shortedCurrencies: IShortedCurrencies[] | null
 }
 

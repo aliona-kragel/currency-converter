@@ -3,6 +3,7 @@ import { IConverter } from "./converterTypes";
 
 const initialState: IConverter = {
   currenciesList: null,
+  shortedCurrencies: null,
 }
 const converterSlice = createSlice({
   name: "converter",
@@ -10,7 +11,10 @@ const converterSlice = createSlice({
   reducers: {
     setCurrenсiesList: (state, action) => {
       state.currenciesList = action.payload;
-    }
+    },
+    setShortedCurrenсies: (state, action) => {
+      state.shortedCurrencies = action.payload;
+    },
   }
 })
 
