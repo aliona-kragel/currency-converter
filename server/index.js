@@ -7,6 +7,8 @@ import { getShortedCurrencies, calculateRate, convertAmount } from './helpers/in
 // todo: метод post принимать данные и отправлять
 // todo: подключить бд
 // todo: добавить таймер на проверку свежих данных
+// todo: (optional!) апи для таблицы
+// TODO: при открытии страницы сделать запрос на контент для попапа /ShortedCurrencies 
 
 const PORT = 3001;
 const app = express();
@@ -41,38 +43,25 @@ app.get('/Currencies', (req, res) => {
   res.json(allCurrencies)
 })
 
-// ----------------------------------------------------------------
-const fakeRequest = {
-  changedCurrency: {
-    id: 431,
-    abbr: 'USD',
-    value: 100, // сумма которую вводили
-  },
-  displayedCurrencies: ['RUB', 'BYN', 'USD'],
-};
-
-//возвращает  из фронта данные изменненной валюты и список отображенных на экране, чтобы пересчитать
+//возвращает  из фронта данные изменненной валюты, чтобы пересчитать
 app.post('/UpdateCurrencies', (req, res) => {
-  // const requestData = req.body;
-
-  const { changedCurrency, displayedCurrencies } = fakeRequest; // updateCurrency - то что вводили, displayedCurrencies - то что отображено на стр
-
-  const filteredCurrencies = allCurrencies.filter(({ Cur_Abbreviation }) => displayedCurrencies.includes(Cur_Abbreviation)) //отображенные на экране
-
-  const baseRate = filteredCurrencies.find(({ Cur_ID }) => Cur_ID === changedCurrency.id).Cur_OfficialRate; // ищем rate валюты которую изменили
+  const changedCurrency = req.body; // updateCurrency - то что вводили 
+  const baseRate = allCurrencies.find(({ Cur_Abbreviation }) => Cur_Abbreviation === changedCurrency.abbr).Cur_OfficialRate; // ищем rate валюты которую изменили
 
   const rates = {};
-  filteredCurrencies.forEach(({ Cur_Abbreviation, Cur_OfficialRate, Cur_Scale }) => {
+  allCurrencies.forEach(({ Cur_Abbreviation, Cur_OfficialRate, Cur_Scale }) => {
     rates[Cur_Abbreviation] = calculateRate(baseRate, Cur_OfficialRate, Cur_Scale);
-  }); // генерируем объект с рейтами отображаемых валют
+  }); // генерируем объект с рейтами всех валют
   rates['BYN'] = baseRate; // добавляем BYN рейт валюту, потому что в апи не приходит BYN 
 
-  const convertedCurrencies = {};
-  displayedCurrencies.forEach((abbr) => {
-    convertedCurrencies[abbr] = convertAmount(changedCurrency.value, rates[abbr]);
-  }); // формируем объект с резулатами рассчетов валют для отправки на фронт
+  const result = allCurrencies.map(({ Cur_ID, Cur_Abbreviation, Cur_Name }) => ({ id: Cur_ID, abbr: Cur_Abbreviation, name: Cur_Name, amount: convertAmount(changedCurrency.amount, rates[Cur_Abbreviation]) }));
+  // отправить на фронт!!!
 
-  res.status(200).send('Данные успешно обновлены'); // отправить на фронт!!!
+  const response = {
+    message: 'Данные успешно обновлены',
+    data: result,
+  };
+  res.status(200).json(response);
 });
 
 app.listen(PORT, () => {

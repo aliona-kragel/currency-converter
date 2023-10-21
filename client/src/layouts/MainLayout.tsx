@@ -1,5 +1,5 @@
+import NavMenu from "components/NavMenu";
 import { Outlet } from "react-router-dom";
-import NavMenu from "../components/NavMenu";
 
 const MainLayout = () => {
   return (

@@ -1,4 +1,4 @@
-import LinkItem from "../LinkItem";
+import LinkItem from "components/LinkItem";
 import styles from "./styles.module.scss";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 

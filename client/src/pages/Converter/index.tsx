@@ -1,27 +1,27 @@
 import { useEffect } from "react";
-import useConverterActions from "../../hooks/useConverterActions";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
-import axios from "axios";
-import currencyService from "../../services";
+import { useTypedSelector } from "hooks/useTypedSelector";
+import CurrencyInput from "components/CyrrencyInput";
+import { useDispatch } from 'react-redux';
+import { fetchContent } from "store/slices/converter/converterSlice";
+import { AppDispatch } from "store";
+import { DEFAULT_ABBR, DEFAULT_AMOUNT } from "helpers/constants";
 
 const Converter = () => {
-  const { setShortedCurrenсies } = useConverterActions();
-  const { shortedCurrencies } = useTypedSelector(state => state.converter);
+  const { formState } = useTypedSelector(state => state.converter);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    currencyService.getShortedCurrencies()
-      .then((data) => {
-        console.log(data);
-        setShortedCurrenсies(data)
-      })
-      .catch((error) => {
-        console.error("Произошла ошибка при выполнении запроса:", error);
-      });
+    dispatch(fetchContent({ abbr: DEFAULT_ABBR, amount: DEFAULT_AMOUNT }));
   }, [])
 
   return (
     <>
-      {shortedCurrencies?.length && shortedCurrencies.map((curr) => <p key={curr.id}>{`${curr.name} `}</p>)}
+      {!!formState?.length && formState.map(item =>
+        <CurrencyInput
+          key={item.id}
+          label={item.abbr}
+          amount={item.amount}
+          name={item.name} />)}
     </>
   )
 }
