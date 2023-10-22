@@ -7,6 +7,7 @@ import { AppDispatch } from "store";
 import { DEFAULT_ABBR, DEFAULT_AMOUNT } from "helpers/constants";
 import CurrencySelector from "components/CurrencySelector";
 import PopupButtonAdd from "components/PopupButtonAdd";
+import styles from './styles.module.scss'
 
 const Converter = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -26,16 +27,18 @@ const Converter = () => {
   }
 
   return (
-    <>
+    <section className={styles.converter}>
       <CurrencySelector open={open} setOpen={setOpen} />
-      {!!formState?.length && formState.map(item =>
-        <CurrencyInput
-          key={item.id}
-          label={item.abbr}
-          amount={item.amount}
-          name={item.name} />)}
+      <div className={styles.converter__fields}>
+        {!!formState?.length && formState.map(item =>
+          <CurrencyInput
+            key={item.id}
+            label={item.abbr}
+            amount={item.amount}
+            name={item.name} />)}
+      </div>
       <PopupButtonAdd onClick={handleClick}>Добавить валюту</PopupButtonAdd>
-    </>
+    </section>
   )
 }
 

@@ -4,7 +4,7 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 const NavMenu = () => {
   return (
-    <div className={styles.nav}>
+    <nav className={styles.nav}>
       <CurrencyExchangeIcon fontSize="large" className={styles.icon} />
       <div className={styles.nav__links}>
         <LinkItem to="converter">
@@ -14,7 +14,7 @@ const NavMenu = () => {
           currencies
         </LinkItem>
       </div>
-    </div>
+    </nav>
   )
 }
 

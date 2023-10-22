@@ -54,8 +54,23 @@ app.post('/UpdateCurrencies', (req, res) => {
   }); // генерируем объект с рейтами всех валют
   rates['BYN'] = baseRate; // добавляем BYN рейт валюту, потому что в апи не приходит BYN 
 
-  const result = allCurrencies.map(({ Cur_ID, Cur_Abbreviation, Cur_Name }) => ({ id: Cur_ID, abbr: Cur_Abbreviation, name: Cur_Name, amount: convertAmount(changedCurrency.amount, rates[Cur_Abbreviation]) }));
-  // отправить на фронт!!!
+  const result = allCurrencies.map(({ Cur_ID, Cur_Abbreviation, Cur_Name }) => {
+    if (Cur_Abbreviation === changedCurrency.abbr) {
+      return ({
+        id: Cur_ID,
+        abbr: Cur_Abbreviation,
+        name: Cur_Name,
+        amount: changedCurrency.amount
+      })
+    }
+
+    return ({
+      id: Cur_ID,
+      abbr: Cur_Abbreviation,
+      name: Cur_Name,
+      amount: convertAmount(changedCurrency.amount, rates[Cur_Abbreviation])
+    })
+  });
 
   const response = {
     message: 'Данные успешно обновлены',
