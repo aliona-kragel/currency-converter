@@ -1,82 +1,94 @@
 import express from 'express';
 import cors from 'cors';
 import { currencyApi } from './api/index.js';
-import { getShortedCurrencies, calculateRate, convertAmount } from './helpers/index.js';
+import { getShortedCurrencies, calculateRate, convertAmount, findBaseRate, generateRates } from './helpers/index.js';
+import { getDataFromFirestore, sendDataToFirestore } from './firebase/index.js';
+import { initializeApp } from "firebase/app";
+import { COLLECTION_NAME, DOCUMENT_ID, firebaseConfig } from "./firebase/config.js";
+import { getFirestore } from 'firebase/firestore';
 
-// todo: добавить валидационные ошибки/проверки на валидные запросы => спросить чат гпт на проверки
-// todo: метод post принимать данные и отправлять
-// todo: подключить бд
 // todo: добавить таймер на проверку свежих данных
 // todo: (optional!) апи для таблицы
 // TODO: при открытии страницы сделать запрос на контент для попапа /ShortedCurrencies 
 
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore(firebaseApp);
+
 const PORT = 3001;
 const app = express();
-
-// fake bd
-let allCurrencies = [];
 
 app.use(cors());
 app.use(express.json());
 
-//получили данные из api
-currencyApi.getCurrenciesList()
-  .then(res => {
+const fetchAndStoreCurrencies = async () => {
+  try {
+    const res = await currencyApi.getCurrenciesList();
+
     if (res && Array.isArray(res)) {
-      allCurrencies = res;
+      await sendDataToFirestore(COLLECTION_NAME, DOCUMENT_ID, { currencyData: res });
+      console.log('Currencies data successfully stored in Firestore');
     } else {
-      console.error('Get invalid currencies data');
+      console.error('Received invalid currencies data');
     }
-  })
-  .catch(error => {
-    console.error('Fetching error', error);
-  });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+fetchAndStoreCurrencies();
 
-//возвращает данные для селекта
-app.get('/ShortedCurrencies', (req, res) => {
-  const shortedCurrancies = getShortedCurrencies(allCurrencies);
-  res.json(shortedCurrancies);
+app.get('/ShortedCurrencies', async (req, res) => {
+  try {
+    const { currencyData } = await getDataFromFirestore(COLLECTION_NAME, DOCUMENT_ID);
+    if (currencyData && Array.isArray(currencyData)) {
+      const shortedCurrencies = getShortedCurrencies(currencyData);
+      res.json(shortedCurrencies);
+    } else {
+      res.status(404).json({ error: 'Currency data not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/Currencies', async (req, res) => {
+  try {
+    const { currencyData } = await getDataFromFirestore(COLLECTION_NAME, DOCUMENT_ID);
+
+    if (currencyData && Array.isArray(currencyData)) {
+      res.json(currencyData);
+    } else {
+      res.status(404).json({ message: 'Document not found in DB' });
+    }
+  } catch (error) {
+    res.status(error.code || 500).json({ message: error.message });
+  }
 })
 
-//возвращает весь массив данных из банка 
-app.get('/Currencies', (req, res) => {
-  res.json(allCurrencies)
-})
+//data from client to recalculate currency
+app.post('/UpdateCurrencies', async (req, res) => {
+  try {
+    const changedCurrency = req.body;
+    const { currencyData } = await getDataFromFirestore(COLLECTION_NAME, DOCUMENT_ID);
+    const baseRate = findBaseRate(changedCurrency.abbr, currencyData);
+    const rates = generateRates(baseRate, currencyData);
 
-//возвращает  из фронта данные изменненной валюты, чтобы пересчитать
-app.post('/UpdateCurrencies', (req, res) => {
-  const changedCurrency = req.body; // updateCurrency - то что вводили 
-  const baseRate = allCurrencies.find(({ Cur_Abbreviation }) => Cur_Abbreviation === changedCurrency.abbr).Cur_OfficialRate; // ищем rate валюты которую изменили
-
-  const rates = {};
-  allCurrencies.forEach(({ Cur_Abbreviation, Cur_OfficialRate, Cur_Scale }) => {
-    rates[Cur_Abbreviation] = calculateRate(baseRate, Cur_OfficialRate, Cur_Scale);
-  }); // генерируем объект с рейтами всех валют
-  rates['BYN'] = baseRate; // добавляем BYN рейт валюту, потому что в апи не приходит BYN 
-
-  const result = allCurrencies.map(({ Cur_ID, Cur_Abbreviation, Cur_Name }) => {
-    if (Cur_Abbreviation === changedCurrency.abbr) {
-      return ({
-        id: Cur_ID,
-        abbr: Cur_Abbreviation,
-        name: Cur_Name,
-        amount: changedCurrency.amount
-      })
-    }
-
-    return ({
+    const result = currencyData.map(({ Cur_ID, Cur_Abbreviation, Cur_Name }) => ({
       id: Cur_ID,
       abbr: Cur_Abbreviation,
       name: Cur_Name,
-      amount: convertAmount(changedCurrency.amount, rates[Cur_Abbreviation])
-    })
-  });
+      amount: Cur_Abbreviation === changedCurrency.abbr ? changedCurrency.amount : convertAmount(changedCurrency.amount, rates[Cur_Abbreviation])
+    }));
 
-  const response = {
-    message: 'Данные успешно обновлены',
-    data: result,
-  };
-  res.status(200).json(response);
+    const response = {
+      message: 'Data updated successfully',
+      data: result,
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 app.listen(PORT, () => {
