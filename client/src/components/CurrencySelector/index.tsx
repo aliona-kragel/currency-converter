@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import useConverterActions from "hooks/useConverterActions";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { ICurrencySelectorProps } from "types/types";
@@ -8,6 +8,8 @@ import CurrencySelectItem from "components/CurrencySelectItem";
 import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import RemoveCircleOutlineSharpIcon from '@mui/icons-material/RemoveCircleOutlineSharp';
 import styles from './styles.module.scss'
+//todo перенести в компонент 
+// todo преназвать кнопку add
 
 const CurrencySelector: FC<ICurrencySelectorProps> = ({ open, setOpen }) => {
   const { shortedCurrencies, displayed } = useTypedSelector(state => state.converter);
@@ -16,10 +18,6 @@ const CurrencySelector: FC<ICurrencySelectorProps> = ({ open, setOpen }) => {
   const handleClose = () => {
     setOpen(false)
   }
-
-  useEffect(() => {
-    console.log(shortedCurrencies)
-  }, [shortedCurrencies])
 
   const handleClick = (id: number, abbr: string) => {
     if (displayed.includes(abbr)) {

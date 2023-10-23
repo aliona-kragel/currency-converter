@@ -4,8 +4,9 @@ import currencyService from "services";
 import { DEFAULT_CURRENCIES } from "helpers/constants";
 import { IRecalculatedCurrencies, IShortedCurrencies } from "types/types";
 
-
 const initialState: IConverter = {
+  isLoading: true,
+  error: "",
   recalculatedCurrancies: [],
   formState: [],
   currenciesList: null,
@@ -15,9 +16,13 @@ const initialState: IConverter = {
 
 export const fetchContent = createAsyncThunk(
   'converter/fetchContent',
-  async (currData: { abbr: string, amount: number }) => {
-    const { data } = await currencyService.updateCurrencies(currData);
-    return data;
+  async (currData: { abbr: string, amount: number }, { rejectWithValue }) => {
+    try {
+      const { data } = await currencyService.updateCurrencies(currData);
+      return data;
+    } catch (err: any) {
+      return rejectWithValue(err?.response?.data?.message || "Something went wrong");
+    }
   }
 )
 
@@ -51,17 +56,30 @@ const converterSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchContent.fulfilled, (state, action) => {
-      state.recalculatedCurrancies = action.payload;
-      state.formState = action.payload.filter((el: IRecalculatedCurrencies) => state.displayed.includes(el.abbr));
-      // todo заменить значения потому что сбрасывается порядок
-      // todo поля с типом намбер нужно избавиться от стрелок
-    });
-    //обработка ошибок
-    builder.addCase(getSortedCurrencies.fulfilled, (state, action) => {
-      state.shortedCurrencies = action.payload.map((item: IShortedCurrencies) => ({ ...item, isDefault: DEFAULT_CURRENCIES.includes(item.abbr) }));
-    })
+    builder
+      .addCase(fetchContent.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchContent.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.recalculatedCurrancies = action.payload;
+        state.formState = action.payload && action.payload.filter((el: IRecalculatedCurrencies) => state.displayed.includes(el.abbr));
+        state.error = null;
+      })
+      .addCase(fetchContent.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+
+      });
+    builder
+      .addCase(getSortedCurrencies.fulfilled, (state, action) => {
+        state.shortedCurrencies = action.payload.map((item: IShortedCurrencies) => ({ ...item, isDefault: DEFAULT_CURRENCIES.includes(item.abbr) }));
+      })
   }
 })
 
 export default converterSlice;
+
+// todo заменить значения потому что сбрасывается порядок
+// todo поля с типом намбер нужно избавиться от стрелок

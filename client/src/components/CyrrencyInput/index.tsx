@@ -2,13 +2,12 @@ import { TextField } from "@mui/material";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { useDebounce } from "use-debounce";
-import { useDispatch } from "react-redux";
 import { fetchContent } from "store/slices/converter/converterSlice";
-import { AppDispatch } from "store";
 import { ICurrencyInputProps } from "types/types";
+import { useTypedDispatch } from "hooks/useTypedDispatch";
 
 const CurrencyInput: FC<PropsWithChildren<ICurrencyInputProps>> = ({ name, label, amount }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useTypedDispatch();
   const [inputValue, setInputValue] = useState<number>(amount);
   const [debouncedInputValue] = useDebounce(inputValue, 500);
 
