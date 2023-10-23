@@ -14,6 +14,11 @@
     &:focus{
       border-color: $main_color;
     }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button{
+      -webkit-appearance: none;
+      margin: 0
+    }
   }
   fieldset {
     border: none;
@@ -25,6 +30,3 @@
     width: 50%;
   }
 }
-
-
-
