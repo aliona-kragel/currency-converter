@@ -1,11 +1,11 @@
 import LinkItem from "components/LinkItem";
 import styles from "./styles.module.scss";
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import Logo from "components/Logo";
 
 const NavMenu = () => {
   return (
     <nav className={styles.nav}>
-      <CurrencyExchangeIcon fontSize="large" className={styles.icon} />
+      <Logo />
       <div className={styles.nav__links}>
         <LinkItem to="converter">
           converter

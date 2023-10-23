@@ -34,6 +34,13 @@ const CurrencyInput: FC<PropsWithChildren<ICurrencyInputProps>> = ({ name, label
         helperText={name}
         onInput={handleChange}
         type="number"
+        inputProps={{
+          style: {
+            fontFamily: 'nunito',
+            borderColor: "rgba(106, 90, 205, 0.5)",
+            borderRadius: "5px"
+          }
+        }}
       />
     </div>
   )
