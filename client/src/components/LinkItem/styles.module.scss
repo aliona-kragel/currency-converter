@@ -15,7 +15,7 @@
   padding: 10px;
   color: black;
   border-radius: 10px;
-  transition: 0.3s ease-in-out;
+  transition: $transition;
   text-decoration: none;
   text-transform: uppercase;
   border: 2px solid rgba($color: $extra_color, $alpha: 0.1);

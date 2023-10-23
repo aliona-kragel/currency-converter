@@ -1,13 +1,30 @@
 @import "../../styles/variables.scss";
 
 .input__wrapper{
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   input{
-    border: 2px solid rgba($color: $main_color, $alpha: 0.5);
-    background: rgba($color: $extra_color, $alpha: 0.2);
+    border: 2px solid rgba($color: $extra_color, $alpha: 0.1);
+    background: rgba($color: $extra_color, $alpha: 0.3);
+    border-radius: 10px;
+    transition: $transition;
+    &:focus{
+      border-color: $main_color;
+    }
+  }
+  fieldset {
+    border: none;
+  }
+  label{
+    color: $main_color-hover;
+  }
+  .textfield{
+    width: 50%;
   }
 }
+
 
 

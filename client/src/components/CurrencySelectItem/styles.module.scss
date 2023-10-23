@@ -3,11 +3,19 @@
 .select__item{
     background: none;
     border: none;
-    text-align: start;
     padding: 3px;
     display: flex;
     justify-content: space-between;
-    &:hover {
-      background: lightgray;
+    align-items: center;
+    border-radius: 10px;
+    svg path {
+      color: $main_color;
     }
+    &:hover {
+      background: rgba($color: $extra_color, $alpha: 0.2);
+      svg path{
+        color: $main_color-hover;
+      }
+    }
+
 }

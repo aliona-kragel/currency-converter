@@ -8,10 +8,10 @@ const NavMenu = () => {
       <Logo />
       <div className={styles.nav__links}>
         <LinkItem to="converter">
-          converter
+          конвертер
         </LinkItem >
         <LinkItem to="currencies">
-          currencies
+          курсы валют
         </LinkItem>
       </div>
     </nav>

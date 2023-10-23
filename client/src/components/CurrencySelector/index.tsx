@@ -28,7 +28,7 @@ const CurrencySelector: FC<ICurrencySelectorProps> = ({ open, setOpen }) => {
   }
 
   return (
-    <DialogWrapper open={open} onClose={handleClose}>
+    <DialogWrapper open={open} onClose={handleClose} >
       <div className={styles.dialog__header}>
         <h2>Выберите валюту</h2>
         <PopupButtonClose onClick={handleClose} />
