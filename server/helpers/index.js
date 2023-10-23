@@ -20,3 +20,9 @@ export const generateRates = (baseRate, currencyData) => {
   rates['BYN'] = baseRate;    // add BYN rates, because banking API without BYN
   return rates;
 }
+export const UPDATE_INTERVAL = 2 * 60 * 60 * 1000; //2 hours
+export const shouldUpdateData = (lastUpdated, currencyData) => {
+  const currentTime = Date.now();
+  const lastUpdatedInterval = currentTime - lastUpdated;
+  return !currencyData?.length || lastUpdatedInterval >= UPDATE_INTERVAL;
+}
