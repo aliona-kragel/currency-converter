@@ -35,6 +35,7 @@ const CurrencyInput: FC<PropsWithChildren<ICurrencyInputProps>> = ({ name, label
         onInput={handleChange}
         type="number"
         className={styles.textfield}
+        inputProps={{ autoComplete: 'off' }}
       />
     </div>
   )

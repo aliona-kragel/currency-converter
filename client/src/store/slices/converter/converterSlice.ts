@@ -58,7 +58,6 @@ const converterSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchContent.pending, (state) => {
-        state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchContent.fulfilled, (state, action) => {
