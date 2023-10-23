@@ -64,7 +64,7 @@ const converterSlice = createSlice({
       .addCase(fetchContent.fulfilled, (state, action) => {
         state.isLoading = false;
         state.recalculatedCurrancies = action.payload;
-        state.formState = action.payload && action.payload.filter((el: IRecalculatedCurrencies) => state.displayed.includes(el.abbr));
+        state.formState = action.payload && state.displayed.map((displayedAbbr => action.payload.find((el: IRecalculatedCurrencies) => el.abbr === displayedAbbr))) //не сбрасывает порядок отображ. полей, после обновления данных
         state.error = null;
       })
       .addCase(fetchContent.rejected, (state, action) => {
@@ -81,5 +81,3 @@ const converterSlice = createSlice({
 
 export default converterSlice;
 
-// todo заменить значения потому что сбрасывается порядок
-// todo поля с типом намбер нужно избавиться от стрелок
