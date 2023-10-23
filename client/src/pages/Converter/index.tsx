@@ -7,7 +7,8 @@ import CurrencySelector from "components/CurrencySelector";
 import PopupButtonAdd from "components/AddCurrencyBtn";
 import styles from './styles.module.scss'
 import { useTypedDispatch } from "hooks/useTypedDispatch";
-import { Alert, AlertTitle, CircularProgress } from "@mui/material";
+import { Alert } from "@mui/material";
+import Loader from "components/Loader";
 
 const Converter = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -25,18 +26,18 @@ const Converter = () => {
   const handleClick = () => {
     setOpen(true)
   }
-  {
-    // isLoading ? <CircularProgress className={styles.converter__loader} /> :
-    return (
-      <section className={styles.converter}>
-        {error && error.length > 0 && (
-          <Alert severity="error">
-            {error} — <strong>check it out!</strong>
-          </Alert>)
-        }
-        <CurrencySelector open={open} setOpen={setOpen} />
-        {!!formState?.length &&
-          <div className={styles.converter__fields}>
+  return (
+    <section className={styles.converter}>
+      {error && error.length > 0 && (
+        <Alert severity="error">
+          {error} — <strong>check it out!</strong>
+        </Alert>)
+      }
+      <CurrencySelector open={open} setOpen={setOpen} />
+      <div className={styles.converter__fields}>
+        {isLoading ? <Loader /> :
+          !!formState?.length &&
+          <>
             <div className={styles.converter__fields_list}>
               {!!formState?.length && formState.map(item =>
                 <CurrencyInput
@@ -46,12 +47,12 @@ const Converter = () => {
                   name={item.name} />)}
             </div>
             <PopupButtonAdd onClick={handleClick}>Добавить валюту</PopupButtonAdd>
-          </div>
-
+          </>
         }
-      </section>
-    )
-  }
+      </div>
+
+    </section>
+  )
 }
 
 export default Converter;
