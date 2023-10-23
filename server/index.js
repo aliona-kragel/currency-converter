@@ -7,9 +7,7 @@ import { initializeApp } from "firebase/app";
 import { COLLECTION_NAME, DOCUMENT_ID, firebaseConfig } from "./firebase/config.js";
 import { getFirestore } from 'firebase/firestore';
 
-// todo: добавить таймер на проверку свежих данных
 // todo: (optional!) апи для таблицы
-// TODO: при открытии страницы сделать запрос на контент для попапа /ShortedCurrencies 
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);

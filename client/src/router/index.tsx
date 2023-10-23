@@ -6,7 +6,7 @@ import Currencies from "../pages/Currencies";
 export const router = createBrowserRouter(createRoutesFromElements(
   <>
     <Route path="/" element={<MainLayout />}>
-      <Route path="/converter" element={<Converter />} />
+      <Route path="/" element={<Converter />} />
       <Route path="currencies" element={<Currencies />} />
     </Route>
   </>
