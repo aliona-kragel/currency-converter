@@ -1,6 +1,6 @@
 import { Dispatch, MouseEventHandler, SetStateAction } from "react"
 
-export interface ICurrencies {
+export interface ICurrenciesList {
   Cur_ID: number,
   Date: string,
   Cur_Abbreviation: string,

@@ -9,7 +9,6 @@ const initialState: IConverter = {
   error: "",
   recalculatedCurrancies: [],
   formState: [],
-  currenciesList: null,
   displayed: DEFAULT_CURRENCIES,
   shortedCurrencies: null,
 }
@@ -37,9 +36,6 @@ const converterSlice = createSlice({
   name: "converter",
   initialState,
   reducers: {
-    setCurrenсiesList: (state, action) => {
-      state.currenciesList = action.payload;
-    },
     addCurrency: (state, action) => {
       const currId: number = action.payload;
       const addedCurrency = state.recalculatedCurrancies.find(item => item.id === currId);
