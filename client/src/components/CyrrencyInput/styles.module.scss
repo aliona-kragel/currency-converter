@@ -30,3 +30,19 @@
     width: 50%;
   }
 }
+
+@media(max-width: 768px){
+  .input__wrapper{
+    .textfield{
+      width: 80%;
+    }
+  }
+}
+
+@media(max-width: 425px){
+  .input__wrapper{
+    .textfield{
+      width: 100%;
+    }
+  }
+}

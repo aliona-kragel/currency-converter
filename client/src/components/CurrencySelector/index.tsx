@@ -8,8 +8,6 @@ import CurrencySelectItem from "components/CurrencySelectItem";
 import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import RemoveCircleOutlineSharpIcon from '@mui/icons-material/RemoveCircleOutlineSharp';
 import styles from './styles.module.scss'
-//todo перенести в компонент 
-// todo преназвать кнопку add
 
 const CurrencySelector: FC<ICurrencySelectorProps> = ({ open, setOpen }) => {
   const { shortedCurrencies, displayed } = useTypedSelector(state => state.converter);

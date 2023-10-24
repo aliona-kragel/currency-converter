@@ -19,6 +19,7 @@
     background: rgba($color: $extra_color, $alpha: 0.1);
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
     &_title{
+      font-size: 24px;
       color: $main_color-hover;
       text-align: center;
       margin-bottom: 10px;
@@ -26,6 +27,18 @@
     &_head{
       background: rgba($color: $extra_color, $alpha: 0.2);
       border: 2px solid rgba($color: $extra_color, $alpha: 0.1);
+    }
+  }
+}
+
+@media(max-width: 768px){
+  .currencies{
+    div &__table{
+      width: 90vw;
+      padding: 10px 0px 10px 10px;
+      &_title{
+        font-size: 16px;
+      }
     }
   }
 }

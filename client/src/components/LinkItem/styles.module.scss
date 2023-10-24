@@ -19,6 +19,7 @@
   text-decoration: none;
   text-transform: uppercase;
   border: 2px solid rgba($color: $extra_color, $alpha: 0.1);
+  cursor: pointer;
   &:hover{
     border: 2px solid $main_color;
   }
