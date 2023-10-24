@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font: {
+    family: Manrope, sans-serif;
+    size: 1rem;
+    weight: 500;
+  }
+}
+
+.app{
+  height: 100vh;
+  background-image: url("../assets/images/background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

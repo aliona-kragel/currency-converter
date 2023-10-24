@@ -1,0 +1,32 @@
+@import "../../styles/variables.scss";
+
+.link__container {
+  border-radius: 10px;
+  background: rgba($color: $extra_color, $alpha: 0.1);
+  box-shadow: rgba(0, 0, 0, 1) 0px 25px 20px -20px;
+}
+
+.link__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content:  space-evenly;
+  border-radius: 8px;
+  padding: 10px;
+  color: black;
+  border-radius: 10px;
+  transition: $transition;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 2px solid rgba($color: $extra_color, $alpha: 0.1);
+  &:hover{
+    border: 2px solid $main_color;
+  }
+}
+
+.active__link{
+  color: white;
+  background-color: $main_color;
+  border-color: $main_color;
+}
+
