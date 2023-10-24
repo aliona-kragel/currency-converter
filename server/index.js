@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { currencyApi } from './api/index.js';
-import { getShortedCurrencies, convertAmount, findBaseRate, generateRates, shouldUpdateData } from './helpers/index.js';
+import { getShortedCurrencies, convertAmount, findBaseRate, generateRates, shouldUpdateData, getChangedCurrScale } from './helpers/index.js';
 import { getDataFromFirestore, sendDataToFirestore } from './firebase/index.js';
 import { initializeApp } from "firebase/app";
 import { COLLECTION_NAME, DOCUMENT_ID, firebaseConfig } from "./firebase/config.js";
@@ -77,6 +77,7 @@ app.post('/UpdateCurrencies', async (req, res) => {
     const { currencyData, lastUpdated } = await getDataFromFirestore(COLLECTION_NAME, DOCUMENT_ID);
     const shouldUpdate = shouldUpdateData(lastUpdated, currencyData); // нужно ли обновить?
     const data = shouldUpdate ? await getDataFromBank() : currencyData; // получаем актуальные данные, если нужно
+    const changedCurrencyScale = getChangedCurrScale(data, changedCurrency.abbr);
 
     const baseRate = findBaseRate(changedCurrency.abbr, data);
     const rates = generateRates(baseRate, data);
@@ -84,7 +85,7 @@ app.post('/UpdateCurrencies', async (req, res) => {
       id: Cur_ID,
       abbr: Cur_Abbreviation,
       name: Cur_Name,
-      amount: Cur_Abbreviation === changedCurrency.abbr ? changedCurrency.amount : convertAmount(changedCurrency.amount, rates[Cur_Abbreviation])
+      amount: Cur_Abbreviation === changedCurrency.abbr ? changedCurrency.amount : convertAmount(changedCurrency.amount, rates[Cur_Abbreviation], changedCurrencyScale)
     }));
     const response = {
       message: 'Data updated successfully',

@@ -5,11 +5,16 @@ export const adjustCurrency = (id, name, abbr) => ({ id, name, abbr })
 export const getShortedCurrencies = (data) =>
   data.map(({ Cur_ID, Cur_Abbreviation, Cur_Name }) => adjustCurrency(Cur_ID, Cur_Name, Cur_Abbreviation));
 
-export const convertAmount = (amount, rate) => (amount * rate).toFixed(4);
+export const convertAmount = (amount, rate, editedCurScale) => ((amount * rate) / editedCurScale).toFixed(4);
 
 export const findBaseRate = (abbr, currencyData) => {
   const currency = currencyData.find(({ Cur_Abbreviation }) => Cur_Abbreviation === abbr);
   return currency ? currency.Cur_OfficialRate : 0;
+}
+
+export const getChangedCurrScale = (data, abbr) => {
+  const scale = data.find(({ Cur_Abbreviation }) => Cur_Abbreviation === abbr).Cur_Scale;
+  return scale
 }
 
 export const generateRates = (baseRate, currencyData) => {
