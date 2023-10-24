@@ -56,10 +56,11 @@ app.get('/ShortedCurrencies', async (req, res) => {
 
 app.get('/Currencies', async (req, res) => {
   try {
-    const { currencyData } = await getDataFromFirestore(COLLECTION_NAME, DOCUMENT_ID);
-
+    const { currencyData, lastUpdated } = await getDataFromFirestore(COLLECTION_NAME, DOCUMENT_ID);
+    const shouldUpdate = shouldUpdateData(lastUpdated, currencyData);
+    const data = shouldUpdate ? await getDataFromBank() : currencyData;
     if (currencyData && Array.isArray(currencyData)) {
-      res.json(currencyData);
+      res.json(data);
     } else {
       res.status(404).json({ message: 'Document not found in DB' });
     }
