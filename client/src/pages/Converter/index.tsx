@@ -17,11 +17,11 @@ const Converter = () => {
 
   useEffect(() => {
     dispatch(fetchContent({ abbr: DEFAULT_ABBR, amount: DEFAULT_AMOUNT }));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getSortedCurrencies())
-  }, [])
+  }, [dispatch])
 
   const handleClick = () => {
     setOpen(true)

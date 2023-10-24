@@ -11,11 +11,8 @@ const Currencies = () => {
   const dispatch = useTypedDispatch();
   useEffect(() => {
     dispatch(getCurrencies());
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {
-    console.log(currenciesList)
-  })
 
   return (
     <section className={styles.currencies}>
