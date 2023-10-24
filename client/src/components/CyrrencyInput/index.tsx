@@ -23,7 +23,7 @@ const CurrencyInput: FC<PropsWithChildren<ICurrencyInputProps>> = ({ name, label
   useEffect(() => {
     if (debouncedInputValue === amount) return;
     dispatch(fetchContent({ abbr: label, amount: debouncedInputValue }))
-  }, [debouncedInputValue]);
+  }, [dispatch, debouncedInputValue, amount, label]);
 
   return (
     <div className={styles.input__wrapper}>
