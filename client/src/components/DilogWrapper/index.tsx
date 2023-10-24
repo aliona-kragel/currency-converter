@@ -22,10 +22,10 @@ const DialogWrapper: FC<PropsWithChildren<IDialogWrapperProps>> = ({ open, onClo
       aria-describedby="alert-dialog-slide-description"
       PaperProps={{
         style: {
-          background: 'rgba(255, 255, 255, 0.5)',
-          backdropFilter: " blur(10px)",
+          background: 'rgba(255, 255, 255, 0.9)',
+          backdropFilter: " blur(40px)",
           border: "2px solid rgba(255, 255, 255, 0.1)",
-          borderRadius: "30px"
+          borderRadius: "30px",
         },
       }}
     >

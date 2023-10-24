@@ -2,6 +2,7 @@
 
 .dialog{
   &__header {
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,6 +20,14 @@
     &::-webkit-scrollbar-thumb {
       background-color: $main_color;   
       border-radius: 10px;
+    }
+  }
+}
+
+@media(max-width: 660px){
+  .dialog{
+    &__header{
+      font-size: 12px;
     }
   }
 }

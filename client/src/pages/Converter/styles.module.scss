@@ -31,3 +31,12 @@
     }
   }
 }
+
+@media(max-width: 660px){
+  .converter{
+    &__fields{
+      width: 90vw;
+      padding: 30px 0px 10px 10px;
+    }
+  }
+}

@@ -17,11 +17,13 @@ const Converter = () => {
 
   useEffect(() => {
     dispatch(fetchContent({ abbr: DEFAULT_ABBR, amount: DEFAULT_AMOUNT }));
-  }, [dispatch]);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
-    dispatch(getSortedCurrencies())
-  }, [dispatch])
+    dispatch(getSortedCurrencies());
+    // eslint-disable-next-line
+  }, [])
 
   const handleClick = () => {
     setOpen(true)
