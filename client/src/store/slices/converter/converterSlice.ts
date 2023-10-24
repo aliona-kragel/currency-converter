@@ -65,7 +65,6 @@ const converterSlice = createSlice({
       .addCase(fetchContent.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-
       });
     builder
       .addCase(getSortedCurrencies.fulfilled, (state, action) => {
