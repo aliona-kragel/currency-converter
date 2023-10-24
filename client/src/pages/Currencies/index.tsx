@@ -9,10 +9,11 @@ import Loader from "components/Loader";
 const Currencies = () => {
   const { currenciesList, isLoading } = useTypedSelector(state => state.currencies);
   const dispatch = useTypedDispatch();
+
   useEffect(() => {
     dispatch(getCurrencies());
-  }, [dispatch]);
-
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <section className={styles.currencies}>
