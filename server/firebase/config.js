@@ -1,12 +1,12 @@
-export const firebaseConfig = {
-  apiKey: "AIzaSyD9HWmWWSwCaV7OoTkQHaIvftexf0eJwNs",
-  authDomain: "currency-converter-ca647.firebaseapp.com",
-  projectId: "currency-converter-ca647",
-  storageBucket: "currency-converter-ca647.appspot.com",
-  messagingSenderId: "1032883665123",
-  appId: "1:1032883665123:web:99ae6d8c57529a2c00add6",
-  measurementId: "G-5WQW94ZZDF"
-};
+export const getFirebaseConfig = () => ({
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
+});
 
 export const COLLECTION_NAME = 'currencies';
 export const DOCUMENT_ID = 'currencyData';

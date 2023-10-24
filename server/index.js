@@ -4,18 +4,19 @@ import { currencyApi } from './api/index.js';
 import { getShortedCurrencies, convertAmount, findBaseRate, generateRates, shouldUpdateData, getChangedCurrScale } from './helpers/index.js';
 import { getDataFromFirestore, sendDataToFirestore } from './firebase/index.js';
 import { initializeApp } from "firebase/app";
-import { COLLECTION_NAME, DOCUMENT_ID, firebaseConfig } from "./firebase/config.js";
+import { COLLECTION_NAME, DOCUMENT_ID, getFirebaseConfig } from "./firebase/config.js";
 import { getFirestore } from 'firebase/firestore';
-import dotenv from "dotenv";
+import { config } from 'dotenv';
+
+config();
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(getFirebaseConfig());
 export const db = getFirestore(firebaseApp);
 
 const PORT = 3001;
 const app = express();
 
-dotenv.config();
 
 app.use(cors());
 app.use(express.json());
