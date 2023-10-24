@@ -6,8 +6,7 @@ import { getDataFromFirestore, sendDataToFirestore } from './firebase/index.js';
 import { initializeApp } from "firebase/app";
 import { COLLECTION_NAME, DOCUMENT_ID, firebaseConfig } from "./firebase/config.js";
 import { getFirestore } from 'firebase/firestore';
-
-// todo: (optional!) апи для таблицы
+import dotenv from "dotenv";
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
@@ -15,6 +14,8 @@ export const db = getFirestore(firebaseApp);
 
 const PORT = 3001;
 const app = express();
+
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
