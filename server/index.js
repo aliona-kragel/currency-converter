@@ -8,39 +8,75 @@ import { COLLECTION_NAME, DOCUMENT_ID, getFirebaseConfig } from "./firebase/conf
 import { getFirestore } from 'firebase/firestore';
 import { config } from 'dotenv';
 
+console.log('--------------------');
+console.log('start config()');
+console.log('--------------------');
+
 config();
 
+console.log('--------------------');
+console.log('end config()');
+console.log('--------------------');
+
 // Initialize Firebase
+
+console.log('--------------------');
+console.log('start initializeApp()');
+console.log('--------------------');
+
 const firebaseApp = initializeApp(getFirebaseConfig());
+
+console.log('--------------------');
+console.log('start initializeApp()');
+console.log('--------------------');
+
 export const db = getFirestore(firebaseApp);
 
 const PORT = 3001;
 const app = express();
 
-
 app.use(cors());
 app.use(express.json());
 
 const getDataFromBank = async () => {
+  console.log('--------------------');
+  console.log('trying to get data from bank');
+  console.log('--------------------');
   try {
     const res = await currencyApi.getCurrenciesList();
+    console.log('--------------------');
+    console.log('data from bank');
+    console.log(res);
+    console.log('--------------------');
     if (res && Array.isArray(res)) {
       await sendDataToFirestore(COLLECTION_NAME, DOCUMENT_ID, { currencyData: res, lastUpdated: Date.now() });
       return res;
     }
   } catch (error) {
+    console.log('--------------------');
+    console.log('error from getting data from bank');
+    console.log('--------------------');
     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
 const checkActualData = async () => {
+  console.log('--------------------');
+  console.log('get data from firestore');
+  console.log('--------------------');
   const { currencyData, lastUpdated } = await getDataFromFirestore(COLLECTION_NAME, DOCUMENT_ID);
+  console.log('--------------------');
+  console.log('check should data be updated');
+  console.log('--------------------');
   if (shouldUpdateData(lastUpdated, currencyData)) {
+    console.log('--------------------');
+    console.log('data should be updated');
+    console.log('--------------------');
     await getDataFromBank();
   }
 }
 
-checkActualData()
+checkActualData();
 
 app.get('/ShortedCurrencies', async (req, res) => {
   try {
