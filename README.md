@@ -22,12 +22,12 @@ cd currency-converter
 
 /frontend/ 
  
-cd client
+cd client ->
 npm install
 
 /backend/ 
 
-cd server
+cd server ->
 npm install
 
 
@@ -37,12 +37,12 @@ To run the project, follow these steps:
 
 1. Start the backend server to fetch currency exchange rates from the NBRB API:
 
-cd server
+cd server ->
 npm run dev
 
 2. Start the React frontend:
 
-cd client
+cd client ->
 npm start
 
 The Currency Converter should now be running locally. You can access it in your web browser by navigating to `http://localhost:3000`.
