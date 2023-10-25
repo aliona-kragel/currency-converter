@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import CurrencyInput from "components/CyrrencyInput";
-import { fetchContent, getSortedCurrencies } from "store/slices/converter/converterSlice";
-import { DEFAULT_ABBR, DEFAULT_AMOUNT } from "helpers/constants";
+import { getSortedCurrencies } from "store/slices/converter/converterSlice";
 import CurrencySelector from "components/CurrencySelector";
 import PopupButtonAdd from "components/AddCurrencyBtn";
-import styles from './styles.module.scss'
 import { useTypedDispatch } from "hooks/useTypedDispatch";
 import { Alert } from "@mui/material";
 import Loader from "components/Loader";
+import styles from './styles.module.scss'
 
 const Converter = () => {
   const [open, setOpen] = useState<boolean>(false)
   const { formState, isLoading, error } = useTypedSelector(state => state.converter);
   const dispatch = useTypedDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContent({ abbr: DEFAULT_ABBR, amount: DEFAULT_AMOUNT }));
-    // eslint-disable-next-line
-  }, []);
 
   useEffect(() => {
     dispatch(getSortedCurrencies());
