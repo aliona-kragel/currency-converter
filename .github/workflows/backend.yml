@@ -5,20 +5,20 @@ on:
     branches:
       - main
 
+env:
+  FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
+  FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
+  FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
+  FIREBASE_MEASUREMENT_ID: ${{secrets.FIREBASE_MEASUREMENT_ID}}
+  FIREBASE_MESSAGING_SENDER_ID: ${{secrets.FIREBASE_MESSAGING_SENDER_ID}}
+  FIREBASE_PROJECT_ID: ${{secrets.FIREBASE_PROJECT_ID}}
+  FIREBASE_STORAGE_BUCKET: ${{secrets.FIREBASE_STORAGE_BUCKET}}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     container:
       image: node:20
-    env:
-      FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
-      FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
-      FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
-      FIREBASE_MEASUREMENT_ID: ${{secrets.FIREBASE_MEASUREMENT_ID}}
-      FIREBASE_MESSAGING_SENDER_ID: ${{secrets.FIREBASE_MESSAGING_SENDER_ID}}
-      FIREBASE_PROJECT_ID: ${{secrets.FIREBASE_PROJECT_ID}}
-      FIREBASE_STORAGE_BUCKET: ${{secrets.FIREBASE_STORAGE_BUCKET}}
-      
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
