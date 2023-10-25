@@ -7,7 +7,7 @@ const NavMenu = () => {
     <nav className={styles.nav}>
       <Logo />
       <div className={styles.nav__links}>
-        <LinkItem to="/">
+        <LinkItem to="converter">
           конвертер
         </LinkItem >
         <LinkItem to="currencies">
