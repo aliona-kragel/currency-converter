@@ -12,7 +12,7 @@ This project is a currency converter with both frontend and backend, utilizing R
 
 1. Clone this repository to your local machine:
 
-git cline https://github.com/aliona-kragel/currency-converter.git
+git clone https://github.com/aliona-kragel/currency-converter.git
 
 2. Navigate to the project directory:
 
@@ -58,6 +58,6 @@ The Currency Converter offers a user-friendly interface for currency conversion 
 
 ## Demo
 
-You can access a live demo of the Currency Converter at [Demo Link]().
+You can access a live demo of the Currency Converter at [Demo Link](https://converter-client-29f77d8bee43.herokuapp.com).
 
 
