@@ -22,10 +22,10 @@ export const generateRates = (baseRate, currencyData) => {
   currencyData.forEach(({ Cur_Abbreviation, Cur_OfficialRate, Cur_Scale }) => {
     rates[Cur_Abbreviation] = calculateRate(baseRate, Cur_OfficialRate, Cur_Scale);
   });
-  rates['BYN'] = baseRate;    // add BYN rates, because banking API without BYN
+  rates['BYN'] = baseRate;
   return rates;
 }
-export const UPDATE_INTERVAL = 2 * 60 * 60 * 1000; //2 hours
+export const UPDATE_INTERVAL = 2 * 60 * 60 * 1000;
 export const shouldUpdateData = (lastUpdated, currencyData) => {
   const currentTime = Date.now();
   const lastUpdatedInterval = currentTime - lastUpdated;
