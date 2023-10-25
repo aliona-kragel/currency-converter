@@ -17,6 +17,7 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: currency-converter
     container:
       image: node:20
     steps:
