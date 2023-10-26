@@ -19,5 +19,8 @@
         color: $main_color-hover;
       }
     }
+    &:disabled{
+      opacity: 0.4;
+    }
 
 }
