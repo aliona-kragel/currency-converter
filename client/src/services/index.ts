@@ -11,7 +11,7 @@ const currencyService = {
     const { data } = await axios.get(`${getApiUrl()}/ShortedCurrencies`);
     return data
   },
-  async updateCurrencies(currData: { abbr: string, amount: number }) {
+  async updateCurrencies(currData: { abbr: string, amount: string }) {
     const { data } = await axios.post(`${getApiUrl()}/UpdateCurrencies`, currData);
     return data;
   }

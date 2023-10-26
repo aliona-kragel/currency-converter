@@ -8,12 +8,19 @@ import { useTypedDispatch } from "hooks/useTypedDispatch";
 
 const CurrencyInput: FC<PropsWithChildren<ICurrencyInputProps>> = ({ name, label, amount }) => {
   const dispatch = useTypedDispatch();
-  const [inputValue, setInputValue] = useState<number>(amount);
+  const [inputValue, setInputValue] = useState<string>(amount);
   const [debouncedInputValue] = useDebounce(inputValue, 500);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value || 0;
-    setInputValue(Number(value));
+    const value = e.target.value || "";
+
+    const regex = /^\d+[.]?\d{0,4}$/;
+
+    const isValidInput = regex.test(value);
+
+    if (isValidInput || value === "") {
+      setInputValue(value);
+    }
   }
 
   useEffect(() => {
@@ -34,7 +41,7 @@ const CurrencyInput: FC<PropsWithChildren<ICurrencyInputProps>> = ({ name, label
         value={inputValue}
         helperText={name}
         onInput={handleChange}
-        type="number"
+        // type="number"
         className={styles.textfield}
         inputProps={{ autoComplete: 'off' }}
       />

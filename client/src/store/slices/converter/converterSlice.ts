@@ -15,7 +15,7 @@ const initialState: IConverter = {
 
 export const fetchContent = createAsyncThunk(
   'converter/fetchContent',
-  async (currData: { abbr: string, amount: number }, { rejectWithValue }) => {
+  async (currData: { abbr: string, amount: string }, { rejectWithValue }) => {
     try {
       const { data } = await currencyService.updateCurrencies(currData);
       return data;
