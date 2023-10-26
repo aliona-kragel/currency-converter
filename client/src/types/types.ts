@@ -13,7 +13,7 @@ export interface IRecalculatedCurrencies {
   id: number,
   abbr: string,
   name: string,
-  amount: number
+  amount: string
 }
 
 export interface IShortedCurrencies {
@@ -26,7 +26,7 @@ export interface IShortedCurrencies {
 export interface ICurrencyInputProps {
   name: string,
   label: string,
-  amount: number
+  amount: string
 }
 
 export interface IDialogWrapperProps {
